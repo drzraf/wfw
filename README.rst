@@ -31,6 +31,8 @@ Sample configuration
     [user]
     email: name@server.com
     password: secretpass
+    [tree]
+    shared: True|False
 
 Commands
 --------

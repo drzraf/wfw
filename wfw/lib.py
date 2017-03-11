@@ -12,11 +12,11 @@ USER_DATA = expanduser('~/.wfwrc')
 
 
 def get_tree_from_file():
+    user = get_user_data()
     tree = None
     with open(TREE_DATA, 'r') as tree_data:
-        tree = Tree(json.load(tree_data))
+        tree = Tree(json.load(tree_data), user['shared'])
     return tree
-
 
 def get_user_data():
     if isfile(USER_DATA):
@@ -26,7 +26,7 @@ def get_user_data():
             configparser.readfp(config)
         user_data['email'] = configparser.get('user', 'email')
         user_data['password'] = configparser.get('user', 'password')
-        user_data['aux'] = configparser.get('tree', 'shared')
+        user_data['shared'] = configparser.get('tree', 'shared')
         return user_data
 
 
