@@ -83,13 +83,11 @@ def _is_successful(request):
     return True
 
 
-def post_local_change(session_id, operation, parent_id, name, deleted_id=None):
-    with open(TREE_DATA, 'r') as tree_data:
-        config = json.load(tree_data)
-
-    client_timestamp = config['projectTreeData']['mainProjectTreeInfo']['dateJoinedTimestampInSeconds'] / 60
-    most_recent_op = config['projectTreeData']['mainProjectTreeInfo']['initialMostRecentOperationTransactionId']
-    client_id = config['projectTreeData']['clientId']
+def post_local_change(tree, session_id, operation, parent_id, name, deleted_id=None):
+    root = tree.find_data_root()
+    client_timestamp = root['dateJoinedTimestampInSeconds'] / 60
+    most_recent_op = root['initialMostRecentOperationTransactionId']
+    client_id = tree.tree_data['projectTreeData']['clientId']
 
     push_poll_id = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase) for _ in range(8))
 

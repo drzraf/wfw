@@ -75,7 +75,7 @@ def add_item(parent_item, new_item):
     user = get_user_data()
     try:
         session_id = log_in(user['email'], user['password'])
-        post_local_change(session_id, 'add', parent_node['id'], new_item)
+        post_local_change(tree, session_id, 'add', parent_node['id'], new_item)
     except LocalChangePostingError:
         log_out(session_id)
         raise
@@ -93,7 +93,7 @@ def remove_item(parent_item, deleted_item):
     user = get_user_data()
     try:
         session_id = log_in(user['email'], user['password'])
-        post_local_change(session_id, 'rm', parent_node['id'], deleted_item, deleted_node['id'])
+        post_local_change(tree, session_id, 'rm', parent_node['id'], deleted_item, deleted_node['id'])
     except LocalChangePostingError:
         log_out(session_id)
         raise
