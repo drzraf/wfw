@@ -45,7 +45,7 @@ def print_list(depth, selected_root=None):
     tree = get_tree_from_file()
     try:
         if selected_root is None:
-            tree.print_by_node(depth)
+            tree.print_by_node(tree.root, depth)
         else:
             tree.print_by_name(selected_root, depth)
     except NodeNotFoundError:
@@ -71,7 +71,7 @@ def search_tags(tag):
 
 def add_item(parent_item, new_item):
     tree = get_tree_from_file()
-    parent_node = tree.get_node(self.root, parent_item)
+    parent_node = tree.get_node(tree.root, parent_item)
     user = get_user_data()
     try:
         session_id = log_in(user['email'], user['password'])
