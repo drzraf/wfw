@@ -20,9 +20,10 @@ class Tree(object):
     def __init__(self, tree_data, shared):
         self._shared = shared
         self._tree_data = tree_data
+        root = self.find_data_root()['rootProject']
         children_of_root = self.find_data_root()['rootProjectChildren']
 
-        self.root = {'id' : "None", 'text' : 'My list', 'children' : [], 'done' : False}
+        self.root = {'id' : root['id'], 'text' : root['nm'].encode('utf-8'), 'children' : [], 'done' : False}
 
         for child in children_of_root:
             self._add_node(child, self.root)
