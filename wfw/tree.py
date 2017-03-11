@@ -13,12 +13,33 @@ END = '\033[0m'
 
 
 class Tree(object):
-    def __init__(self, raw):
+    # shared = False
+    # tree_data = None
+    # root = None
+
+    def __init__(self, tree_data, shared):
+        self._shared = shared
+        self._tree_data = tree_data
+        children_of_root = self.find_data_root()['rootProjectChildren']
+
         self.root = {'id' : "None", 'text' : 'My list', 'children' : [], 'done' : False}
-        children_of_root = raw['projectTreeData']['mainProjectTreeInfo']['rootProjectChildren']
 
         for child in children_of_root:
             self._add_node(child, self.root)
+
+    @property
+    def shared(self):
+        return self._shared
+
+    @property
+    def tree_data(self):
+        return self._tree_data
+
+    def find_data_root(self):
+        if self.shared:
+            return self.tree_data['projectTreeData']['auxiliaryProjectTreeInfos'][0]
+        else:
+            return self.tree_data['projectTreeData']['mainProjectTreeInfo']
 
     def _add_node(self, node, parent):
         is_done = 'cp' in node.keys()
