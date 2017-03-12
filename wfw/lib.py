@@ -72,6 +72,8 @@ def search_tags(tag):
 def add_item(parent_item, new_item):
     tree = get_tree_from_file()
     parent_node = tree.get_node(tree.root, parent_item)
+    if not parent_node:
+        raise Exception("could not find node \"%s\"" % parent_item)
     user = get_user_data()
     try:
         session_id = log_in(user['email'], user['password'])
@@ -89,6 +91,8 @@ def add_item(parent_item, new_item):
 def remove_item(parent_item, deleted_item):
     tree = get_tree_from_file()
     parent_node = tree.get_node(tree.root, parent_item)
+    if not parent_node:
+        raise Exception("could not find node \"%s\"" % parent_item)
     deleted_node = tree.get_node(tree.root, deleted_item)
     user = get_user_data()
     try:
